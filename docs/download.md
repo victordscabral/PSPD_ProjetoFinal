@@ -5,7 +5,7 @@ Este guia oferece instruções resumidas e diretas para instalar e configurar o 
 
 ## 1. Pré-requisitos
 
-- **Docker**: 
+- **Docker**
 - **kubectl**: v1.32.2
 - **kubeadm**: v1.32.2
 - **kubelet**: v1.32.2
@@ -276,3 +276,12 @@ kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/
 ```
 
 ### **Nas workers para se conectar a master:**
+
+Com o link gerado na master, os workers podem se conectar:
+
+Link parecido com:
+
+```bash
+kubeadm join 192.168.1.10:6443 --token lhig5m.wqsmhisg7yyc7ffb \
+ --discovery-token-ca-cert-hash sha256:ffbc95629e305b4de054a5de5edf9aa253a93f87bcb2f79a7d84363f539355b4
+```
