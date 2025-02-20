@@ -230,7 +230,7 @@ sudo sysctl --system
 ```
 
 ```bash
-sudo kubeadm init --apiserver-advertise-address=192.168.1.10 --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.32.2
+sudo kubeadm init --apiserver-advertise-address=192.168.1.10 --pod-network-cidr=10.244.0.0/16 --kubernetes-version=1.32.2
 ```
 esperar terminar de baixar
 
