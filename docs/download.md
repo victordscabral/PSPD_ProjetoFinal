@@ -58,7 +58,7 @@ deve retornar algo como: `kube : kube sudo`
 
 ---
 
-## 3. Configurando master e workers
+## 3. Configuração da Identidade das Máquinas
 
 Após configurada a rede com o switch.
 
@@ -77,19 +77,23 @@ Adicione no final do arquivo e salve:
 192.168.1.10 master
 192.168.1.11 worker1
 192.168.1.12 worker2
+192.168.1.13 worker3
 ```
 
 Agora teremos os ambientes em cada máquina `kube@master`, `kube@worker1` ...
 
 ---
 
-## 4. 
+## 4. Configuração dos Nós (Master e Workers)
 
-Configurar em todas as máquinas:
+Este passo configura os pré-requisitos para o Kubernetes, incluindo módulos do kernel, pacotes necessários e o container runtime (`containerd`). Essas configurações devem ser feitas **em todas as máquinas** (master e workers).
+
+### **Atualizar pacotes**
 ```bash
 sudo apt-get update && sudo apt-get upgrade -y
 ```
 
+### **Configurar módulos do kernel**
 ```bash
 cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
 > overlay
@@ -113,6 +117,7 @@ cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
 > EOF
 ```
 
+### **Instalar dependências básicas**
 ```bash
 sudo apt-get update
 ```
@@ -133,6 +138,7 @@ sudo apt-get install gnupg
 sudo install -m 0755 -d /etc/apt/keyrings
 ```
 
+### **Adicionar repositório do Docker**
 ```bash
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 ```
@@ -148,6 +154,7 @@ echo \
 > sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
+### **Configurar `containerd`**
 ```bash
 sudo apt-get update && sudo apt-get install -y containerd.io
 ```
@@ -176,6 +183,7 @@ sudo systemctl restart containerd
 sudo systemctl status containerd
 ```
 
+### **Adicionar repositório do Kubernetes**
 ```bash
 sudo rm -f /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 ```
@@ -208,7 +216,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
 
-- Agora apenas na master:
+### **Agora apenas na master:**
 ```bash
 sudo sysctl -w net.ipv4.ip_forward=1
 ```
@@ -267,4 +275,4 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/calico.yaml
 ```
 
-- Nas workers para se conectar a master:
+### **Nas workers para se conectar a master:**
