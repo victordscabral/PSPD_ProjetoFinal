@@ -250,10 +250,14 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl get nodes
 ```
 
+#### Reset na master (se necessário)
+
 ```bash
 sudo kubeadm reset -f
 sudo rm -rf /etc/cni/net.d/*
 sudo rm -rf /var/lib/cni/
+sudo rm -rf /var/lib/kubelet/*
+sudo rm -rf /etc/kubernetes/
 sudo iptables -F && sudo iptables -X
 sudo iptables -t nat -F && sudo iptables -t nat -X
 sudo iptables -t mangle -F && sudo iptables -t mangle -X
