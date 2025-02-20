@@ -281,6 +281,16 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ```
 
+Depois pode conferir:
+
+```bash
+kubectl get nodes
+```
+
+```bash
+kubectl get pods -n kube-system
+```
+
 ### **Nas workers para se conectar a master:**
 
 Com o link gerado na master, os workers podem se conectar:
