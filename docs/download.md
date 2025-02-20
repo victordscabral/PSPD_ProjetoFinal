@@ -252,16 +252,18 @@ kubectl get nodes
 
 ```bash
 sudo kubeadm reset -f
-sudo rm -rf /etc/cni/net.d
+sudo rm -rf /etc/cni/net.d/*
+sudo rm -rf /var/lib/cni/
 sudo iptables -F && sudo iptables -X
 sudo iptables -t nat -F && sudo iptables -t nat -X
 sudo iptables -t mangle -F && sudo iptables -t mangle -X
 sudo iptables -P FORWARD ACCEPT
 sudo systemctl restart kubelet
+sudo systemctl restart containerd
 ```
 
 ```bash
-sudo kubeadm init --apiserver-advertise-address=192.168.1.10 --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.32.2
+sudo kubeadm init --apiserver-advertise-address=192.168.1.10 --pod-network-cidr=10.244.0.0/16 --kubernetes-version=1.32.2
 ```
 
 ```bash
@@ -272,7 +274,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/calico.yaml
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ```
 
 ### **Nas workers para se conectar a master:**
