@@ -13,7 +13,7 @@ spec:
         spec:
           containers:
           - name: mpi-word-counter
-            image: pcsg1/mpi-word-counter:1
+            image: pcsg1/mpi-word-counter:2
             command: ["mpirun", "--allow-run-as-root", "-np", "4", "./mpi-word-counter"]
             volumeMounts:
             - name: palavras-volume
@@ -30,7 +30,7 @@ spec:
         spec:
           containers:
           - name: mpi-word-counter
-            image: pcsg1/mpi-word-counter:1
+            image: pcsg1/mpi-word-counter:2
             resources:
               limits:
                 cpu: "1"
