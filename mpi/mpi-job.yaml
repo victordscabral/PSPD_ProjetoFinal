@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mpi-word-counter
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    metadata:
+      name: mpi-word-counter
+    spec:
+      containers:
+      - name: mpi-word-counter
+        image: pcsg1/mpi-word-counter:1
+        command: ["mpirun", "--allow-run-as-root", "-np", "4", "./mpi-word-counter"]
+        volumeMounts:
+        - name: palavras-volume
+          mountPath: /app/palavras.txt
+          subPath: palavras.txt
+      restartPolicy: Never
+      volumes:
+      - name: palavras-volume
