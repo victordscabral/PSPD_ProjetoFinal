@@ -36,7 +36,7 @@ def print_word_counts(word_count):
 
 def main():
     # Solicita o nome do arquivo ao usuário
-    filename = "palavras.txt"
+    filename = "../../palavras.txt"
 
     # Conta as palavras no arquivo
     word_count = count_words(filename)
