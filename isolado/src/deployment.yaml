@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: word-counter
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: word-counter
+  template:
+    metadata:
+      labels:
+        app: word-counter
+    spec:
+      containers:
+      - name: word-counter
+        image: pcsg1/word-counter:1
+        ports:
+        - containerPort: 80
